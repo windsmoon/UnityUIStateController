@@ -1,10 +1,10 @@
-# UI Controller
+# UnityUIStateController
 
 ![Unity](https://img.shields.io/badge/Unity-Recent%20versions-black)
 ![Install](https://img.shields.io/badge/Install-GitHub%20Release-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-UI Controller is a Unity UI state controller package for building reusable UI state workflows. It lets you bind named UI targets, define multiple controller states, capture UI values in the editor, and switch states at runtime with one API call.
+UnityUIStateController is a Unity UI state controller package for building reusable UI state workflows. It lets you bind named UI targets, define multiple controller states, capture UI values in the editor, and switch states at runtime with one API call.
 
 **Languages:** [English](#english) | [中文](#中文)
 
@@ -45,12 +45,12 @@ UI Controller is a Unity UI state controller package for building reusable UI st
 
 ### Installation
 
-Recommended: download the latest release package from [GitHub Releases](https://github.com/windsmoon/UIController/releases), then import it into your Unity project.
+Recommended: download the latest release package from [GitHub Releases](https://github.com/windsmoon/UnityUIStateController/releases), then import it into your Unity project.
 
 Optional UPM Git URL installation:
 
 ```text
-https://github.com/windsmoon/UIController.git
+https://github.com/windsmoon/UnityUIStateController.git
 ```
 
 Because `package.json` is located at the repository root, no `?path=` suffix is required.
@@ -214,7 +214,9 @@ Editor value editing currently supports `bool`, `string`, `float`, `Vector2`, `V
 
 ### Roadmap
 
+- Improve documentation.
 - Better editor experience.
+- Node-based state editor.
 - Fallback animation methods when DOTween is not available.
 - More built-in property support.
 - Custom property extensions without modifying package source code.
@@ -284,12 +286,12 @@ MIT. See [LICENSE](LICENSE).
 
 ### 安装方式
 
-推荐方式：从 [GitHub Releases](https://github.com/windsmoon/UIController/releases) 下载最新 Release 包，然后导入到 Unity 工程。
+推荐方式：从 [GitHub Releases](https://github.com/windsmoon/UnityUIStateController/releases) 下载最新 Release 包，然后导入到 Unity 工程。
 
 可选方式：通过 UPM Git URL 安装：
 
 ```text
-https://github.com/windsmoon/UIController.git
+https://github.com/windsmoon/UnityUIStateController.git
 ```
 
 因为 `package.json` 位于仓库根目录，所以不需要追加 `?path=`。
@@ -453,7 +455,9 @@ new UIControllerPropertyDefinition(UIControllerButtonInteractableProperty.Proper
 
 ### 后续计划
 
+- 完善文档。
 - 更好的编辑器体验。
+- 节点式状态编辑器。
 - 无 DOTween 时回退到其他动画方法。
 - 更多内置属性支持。
 - 自定义属性扩展无需修改包源码。

@@ -1,4 +1,4 @@
-# UI Controller
+# UnityUIStateController
 
 This package is ready to install through Unity Package Manager from the repository Git URL.
 
