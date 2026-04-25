@@ -39,10 +39,7 @@ namespace Framework.UI.Controller.Properties
 
         public override void SetCurrentValue(RectTransform rectTransform, Vector3 value)
         {
-            if (value is Vector3 localScale)
-            {
-                rectTransform.localScale = localScale;
-            }
+            rectTransform.localScale = value;
         }
 
         public override string GetValueText()

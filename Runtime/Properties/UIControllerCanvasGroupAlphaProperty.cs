@@ -64,7 +64,7 @@ namespace Framework.UI.Controller.Properties
 
         private static CanvasGroup GetCanvasGroup(RectTransform rectTransform)
         {
-            return rectTransform != null ? rectTransform.GetComponent<CanvasGroup>() : null;
+            return rectTransform.GetComponent<CanvasGroup>();
         }
         #endregion
     }

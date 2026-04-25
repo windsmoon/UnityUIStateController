@@ -65,7 +65,7 @@ namespace Framework.UI.Controller.Properties
 
         private static Image GetImage(RectTransform rectTransform)
         {
-            return rectTransform != null ? rectTransform.GetComponent<Image>() : null;
+            return rectTransform.GetComponent<Image>();
         }
         #endregion
     }
