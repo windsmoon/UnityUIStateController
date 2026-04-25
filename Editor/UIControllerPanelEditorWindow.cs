@@ -16,6 +16,8 @@ namespace Framework.UI.Editor
         private const float CaptureButtonWidth = 58f;
         private const float CommentButtonWidth = 40f;
         private const float PropertyPopupWidth = 160f;
+        private const float PopupArrowWidth = 18f;
+        private const float PopupArrowSize = 7f;
         private const float AnimationToggleWidth = 88f;
         private const float RowLabelWidth = 110f;
         private const float StateBlockSpacing = 10f;
@@ -52,6 +54,7 @@ namespace Framework.UI.Editor
         private GUIStyle _outlineButtonDisabledStyle;
         private GUIStyle _primaryAddButtonStyle;
         private GUIStyle _iconButtonStyle;
+        private Color _popupArrowColor;
         #endregion
 
         #region methods
@@ -206,6 +209,7 @@ namespace Framework.UI.Editor
 
             string[] controllerOptions = GetControllerOptions(controllerList);
             int newControllerIndex = EditorGUILayout.Popup(_currentControllerIndex, controllerOptions, _toolbarPopupStyle, GUILayout.MinWidth(220f), GUILayout.Height(28f));
+            DrawPopupArrow();
             if (newControllerIndex != _currentControllerIndex)
             {
                 _currentControllerIndex = newControllerIndex;
@@ -783,6 +787,7 @@ namespace Framework.UI.Editor
                 using (new EditorGUI.DisabledScope(true))
                 {
                     EditorGUILayout.Popup(0, new[] { "<No Available Properties>" }, _toolbarPopupStyle, GUILayout.Width(PropertyPopupWidth), GUILayout.Height(24f));
+                    DrawPopupArrow();
                 }
 
                 return;
@@ -799,6 +804,7 @@ namespace Framework.UI.Editor
             using (new EditorGUI.DisabledScope(rectTransform == null))
             {
                 int newIndex = EditorGUILayout.Popup(popupIndex, options, _toolbarPopupStyle, GUILayout.Width(PropertyPopupWidth), GUILayout.Height(24f));
+                DrawPopupArrow();
                 if (newIndex != popupIndex)
                 {
                     UIControllerPropertyDefinition definition = availableDefinitionList[newIndex];
@@ -920,6 +926,7 @@ namespace Framework.UI.Editor
                 using (new EditorGUI.DisabledScope(true))
                 {
                     EditorGUILayout.Popup(0, new[] { "<No Available Targets>" }, _toolbarPopupStyle, GUILayout.Height(24f));
+                    DrawPopupArrow();
                 }
             }
             else
@@ -937,6 +944,7 @@ namespace Framework.UI.Editor
                 }
 
                 int newIndex = EditorGUILayout.Popup(popupIndex, options, _toolbarPopupStyle, GUILayout.Height(24f));
+                DrawPopupArrow();
                 if (newIndex != popupIndex)
                 {
                     string targetName = availableTargetNameList[newIndex];
@@ -1347,12 +1355,15 @@ namespace Framework.UI.Editor
             {
                 alignment = TextAnchor.MiddleLeft,
                 fontSize = 12,
-                padding = new RectOffset(10, 24, 5, 5),
+                padding = new RectOffset(10, 30, 5, 5),
                 normal = { textColor = textColor, background = CreateColorTexture(EditorGUIUtility.isProSkin ? new Color(0.20f, 0.23f, 0.28f, 1f) : new Color(0.96f, 0.97f, 0.99f, 1f)) },
                 hover = { textColor = textColor, background = CreateColorTexture(EditorGUIUtility.isProSkin ? new Color(0.22f, 0.25f, 0.30f, 1f) : new Color(0.94f, 0.96f, 0.99f, 1f)) },
                 active = { textColor = textColor, background = CreateColorTexture(EditorGUIUtility.isProSkin ? new Color(0.22f, 0.25f, 0.30f, 1f) : new Color(0.94f, 0.96f, 0.99f, 1f)) },
                 focused = { textColor = textColor, background = CreateColorTexture(EditorGUIUtility.isProSkin ? new Color(0.20f, 0.23f, 0.28f, 1f) : new Color(0.96f, 0.97f, 0.99f, 1f)) }
             };
+
+            _popupArrowColor = mutedTextColor;
+
 
             _stateFoldoutStyle = new GUIStyle(EditorStyles.foldout)
             {
@@ -1475,6 +1486,35 @@ namespace Framework.UI.Editor
             }
 
             return image != null ? new GUIContent($" {text}", image) : new GUIContent(text);
+        }
+
+        private void DrawPopupArrow()
+        {
+            if (Event.current.type != EventType.Repaint)
+            {
+                return;
+            }
+
+            Rect popupRect = GUILayoutUtility.GetLastRect();
+            if (popupRect.width <= 0f || popupRect.height <= 0f)
+            {
+                return;
+            }
+
+            Rect arrowRect = new Rect(popupRect.xMax - PopupArrowWidth - 4f, popupRect.y, PopupArrowWidth, popupRect.height);
+            Vector2 center = arrowRect.center;
+            float halfWidth = PopupArrowSize * 0.5f;
+            float halfHeight = PopupArrowSize * 0.35f;
+
+            Handles.BeginGUI();
+            Color oldColor = Handles.color;
+            Handles.color = _popupArrowColor;
+            Handles.DrawAAConvexPolygon(
+                new Vector3(center.x - halfWidth, center.y - halfHeight),
+                new Vector3(center.x + halfWidth, center.y - halfHeight),
+                new Vector3(center.x, center.y + halfHeight));
+            Handles.color = oldColor;
+            Handles.EndGUI();
         }
 
         private GUIStyle CreateCardStyle(Color fillColor, RectOffset padding)
