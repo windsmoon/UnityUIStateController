@@ -107,7 +107,7 @@ namespace Windsmoon.UIController
             return _controllerDict.ContainsKey(controllerName);
         }
 
-        public bool HasState(string controllerName, int stateIndex)
+        public bool HasControllerState(string controllerName, int stateIndex)
         {
             if (stateIndex < 0 || HasController(controllerName) == false)
             {

@@ -107,7 +107,7 @@ public class Example : MonoBehaviour
 ```csharp
 public void SetControllerState(string controllerName, int stateIndex, bool forceNoAnimation = false)
 public bool HasController(string controllerName)
-public bool HasState(string controllerName, int stateIndex)
+public bool HasControllerState(string controllerName, int stateIndex)
 ```
 
 Parameters:
@@ -116,7 +116,7 @@ Parameters:
 - `stateIndex`: The zero-based state index.
 - `forceNoAnimation`: Applies values immediately when `true`.
 
-Use `HasController` and `HasState` when you need to check whether a controller or state exists before switching UI state.
+Use `HasController` and `HasControllerState` when you need to check whether a controller or state exists before switching UI state.
 
 ### Supported Properties
 
@@ -344,7 +344,7 @@ public class Example : MonoBehaviour
 ```csharp
 public void SetControllerState(string controllerName, int stateIndex, bool forceNoAnimation = false)
 public bool HasController(string controllerName)
-public bool HasState(string controllerName, int stateIndex)
+public bool HasControllerState(string controllerName, int stateIndex)
 ```
 
 参数说明：
@@ -353,7 +353,7 @@ public bool HasState(string controllerName, int stateIndex)
 - `stateIndex`：从 `0` 开始的状态索引。
 - `forceNoAnimation`：为 `true` 时立即应用目标值，不播放动画。
 
-需要在切换 UI 状态前判断 Controller 或 State 是否存在时，可以使用 `HasController` 和 `HasState`。
+需要在切换 UI 状态前判断 Controller 或 State 是否存在时，可以使用 `HasController` 和 `HasControllerState`。
 
 ### 支持的属性
 
