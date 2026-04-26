@@ -29,6 +29,7 @@ UIController 是一个用于 Unity UI 状态控制的 Package，适合构建可�
 - [Supported Properties](#supported-properties)
 - [Custom Properties](#custom-properties)
 - [Editor Tools](#editor-tools)
+- [Screenshots](#screenshots)
 - [Roadmap](#roadmap)
 - [Repository Layout](#repository-layout)
 - [Development](#development)
@@ -218,6 +219,16 @@ Editor value editing currently supports `bool`, `string`, `float`, `Vector2`, `V
 - Capture and edit property values.
 - Preview state transitions in the editor.
 
+### Screenshots
+
+#### UIController Panel Window
+
+![UIController Panel Window](Documentation~/Images/ui-controller-panel-window.png)
+
+#### UIController Panel Inspector
+
+![UIController Panel Inspector](Documentation~/Images/ui-controller-panel-inspector.png)
+
 ### Roadmap
 
 - Improve documentation.
@@ -271,6 +282,7 @@ MIT. See [LICENSE](LICENSE).
 - [支持的属性](#支持的属性)
 - [自定义属性](#自定义属性)
 - [编辑器工具](#编辑器工具)
+- [截图展示](#截图展示)
 - [后续计划](#后续计划)
 - [仓库结构](#仓库结构)
 - [开发说明](#开发说明)
@@ -459,6 +471,16 @@ new UIControllerPropertyDefinition(UIControllerButtonInteractableProperty.Proper
 - Controller、Target、Property 下拉选择。
 - 支持捕获和编辑属性值。
 - 支持在编辑器内预览状态切换。
+
+### 截图展示
+
+#### UIController Panel 编辑窗口
+
+![UIController Panel 编辑窗口](Documentation~/Images/ui-controller-panel-window.png)
+
+#### UIController Panel Inspector
+
+![UIController Panel Inspector](Documentation~/Images/ui-controller-panel-inspector.png)
 
 ### 后续计划
 
