@@ -216,6 +216,7 @@ Editor value editing currently supports `bool`, `string`, `float`, `Vector2`, `V
 
 - Improve documentation.
 - Better editor experience.
+- Better and more demos.
 - Node-based state editor.
 - Fallback animation methods when DOTween is not available.
 - More built-in property support.
@@ -457,6 +458,7 @@ new UIControllerPropertyDefinition(UIControllerButtonInteractableProperty.Proper
 
 - 完善文档。
 - 更好的编辑器体验。
+- 更好更多的 demo。
 - 节点式状态编辑器。
 - 无 DOTween 时回退到其他动画方法。
 - 更多内置属性支持。
