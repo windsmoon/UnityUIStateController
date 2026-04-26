@@ -221,13 +221,13 @@ Editor value editing currently supports `bool`, `string`, `float`, `Vector2`, `V
 
 ### Screenshots
 
-#### UIController Panel Window
-
-![UIController Panel Window](Documentation~/Images/ui-controller-panel-window.png)
-
 #### UIController Panel Inspector
 
 ![UIController Panel Inspector](Documentation~/Images/ui-controller-panel-inspector.png)
+
+#### UIController Panel Window
+
+![UIController Panel Window](Documentation~/Images/ui-controller-panel-window.png)
 
 ### Roadmap
 
@@ -474,13 +474,13 @@ new UIControllerPropertyDefinition(UIControllerButtonInteractableProperty.Proper
 
 ### 截图展示
 
-#### UIController Panel 编辑窗口
-
-![UIController Panel 编辑窗口](Documentation~/Images/ui-controller-panel-window.png)
-
 #### UIController Panel Inspector
 
 ![UIController Panel Inspector](Documentation~/Images/ui-controller-panel-inspector.png)
+
+#### UIController Panel 编辑窗口
+
+![UIController Panel 编辑窗口](Documentation~/Images/ui-controller-panel-window.png)
 
 ### 后续计划
 
