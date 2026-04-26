@@ -16,9 +16,7 @@ UIController 是一个用于 Unity UI 状态控制的 Package，适合构建可�
 
 ## Demo Video / 演示视频
 
-[Open Button Controller Demo](Documentation~/Videos/ButtonController.mp4)
-
-<video src="Documentation~/Videos/ButtonController.mp4" controls width="100%"></video>
+![Button Controller Demo](Documentation~/Videos/ButtonController.gif)
 
 ## Screenshots / 截图展示
 
