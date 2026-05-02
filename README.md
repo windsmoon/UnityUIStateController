@@ -225,6 +225,7 @@ Editor value editing currently supports `bool`, `string`, `float`, `Vector2`, `V
 - Dedicated editor window: **Window > Framework > UI > UIController Panel**.
 - Controller, target, and property dropdowns.
 - Capture and edit property values.
+- Configure animation ease type and duration for animated properties.
 - Preview state transitions in the editor.
 
 ### Roadmap
@@ -462,6 +463,7 @@ new UIControllerPropertyDefinition(UIControllerButtonInteractableProperty.Proper
 - 独立编辑窗口：**Window > Framework > UI > UIController Panel**。
 - Controller、Target、Property 下拉选择。
 - 支持捕获和编辑属性值。
+- 支持为可动画属性配置动画类型和动画时长。
 - 支持在编辑器内预览状态切换。
 
 ### 后续计划

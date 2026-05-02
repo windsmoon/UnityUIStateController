@@ -42,7 +42,6 @@ namespace Windsmoon.UIController
         }
 
         #region fields
-        private const float StateAnimationDuration = 0.25f;
         [SerializeField]
         private List<UIControllerTargetBinding> _controllerTargetBindingList = new List<UIControllerTargetBinding>();
         [SerializeField]
@@ -308,7 +307,7 @@ namespace Windsmoon.UIController
 
         private void ApplyProperty(UIControllerProperty property, RectTransform rectTransform, bool forceNoAnimation)
         {
-            if (property.CanAnimate == false || property.NeedAnimate == false || forceNoAnimation)
+            if (property.CanAnimate == false || property.NeedAnimate == false || forceNoAnimation || property.AnimationDuration <= 0f)
             {
                 property.ApplyTargetValue(rectTransform);
                 return;
@@ -349,7 +348,7 @@ namespace Windsmoon.UIController
             {
                 animatedValue = value;
                 property.SetCurrentValue(rectTransform, value);
-            }, targetValue, StateAnimationDuration).SetEase(Ease.OutCubic);
+            }, targetValue, property.AnimationDuration).SetEase(property.AnimationEase);
         }
 
         private Tween CreateVector2Tween(UIControllerProperty<Vector2> property, RectTransform rectTransform)
@@ -360,7 +359,7 @@ namespace Windsmoon.UIController
             {
                 animatedValue = value;
                 property.SetCurrentValue(rectTransform, value);
-            }, targetValue, StateAnimationDuration).SetEase(Ease.OutCubic);
+            }, targetValue, property.AnimationDuration).SetEase(property.AnimationEase);
         }
 
         private Tween CreateVector3Tween(UIControllerProperty<Vector3> property, RectTransform rectTransform)
@@ -371,7 +370,7 @@ namespace Windsmoon.UIController
             {
                 animatedValue = value;
                 property.SetCurrentValue(rectTransform, value);
-            }, targetValue, StateAnimationDuration).SetEase(Ease.OutCubic);
+            }, targetValue, property.AnimationDuration).SetEase(property.AnimationEase);
         }
 
         private Tween CreateColorTween(UIControllerProperty<Color> property, RectTransform rectTransform)
@@ -382,7 +381,7 @@ namespace Windsmoon.UIController
             {
                 animatedValue = value;
                 property.SetCurrentValue(rectTransform, value);
-            }, targetValue, StateAnimationDuration).SetEase(Ease.OutCubic);
+            }, targetValue, property.AnimationDuration).SetEase(property.AnimationEase);
         }
 
         private void RegisterTween(RectTransform rectTransform, string propertyName, Tween tween)

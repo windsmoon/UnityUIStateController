@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 16995157, guid: 7ac775cb5f7b9d543be8c6f49b800c9d, type: 3}
+  m_Script: {fileID: 16995157, guid: 53d9d52b13e3a61409c95afc6b20f5a1, type: 3}
   m_Name: DOTweenSettings
   m_EditorClassIdentifier: DOTween.dll::DG.Tweening.Core.DOTweenSettings
   useSafeMode: 1

@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Windsmoon.UIController.Properties
@@ -7,8 +8,16 @@ namespace Windsmoon.UIController.Properties
     public abstract class UIControllerProperty
     {
         #region fields
+        public const float DefaultAnimationDuration = 0.25f;
+        public const Ease DefaultAnimationEase = Ease.OutCubic;
+        private const float MinAnimationDuration = 0f;
+
         [SerializeField]
         private bool _needAnimation;
+        [SerializeField]
+        private Ease _animationEase = DefaultAnimationEase;
+        [SerializeField]
+        private float _animationDuration = DefaultAnimationDuration;
         #endregion
 
         #region properties
@@ -18,6 +27,16 @@ namespace Windsmoon.UIController.Properties
         {
             get => CanAnimate && _needAnimation;
             set => _needAnimation = CanAnimate && value;
+        }
+        public Ease AnimationEase
+        {
+            get => _animationEase == Ease.Unset ? DefaultAnimationEase : _animationEase;
+            set => _animationEase = value;
+        }
+        public float AnimationDuration
+        {
+            get => Mathf.Max(MinAnimationDuration, _animationDuration);
+            set => _animationDuration = Mathf.Max(MinAnimationDuration, value);
         }
         #endregion
 

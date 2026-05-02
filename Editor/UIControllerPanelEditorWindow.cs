@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using DG.DOTweenEditor;
 using Windsmoon.UIController;
 using Windsmoon.UIController.Properties;
@@ -11,6 +12,12 @@ namespace Windsmoon.UIController.Editor
 {
     public class UIControllerPanelEditorWindow : EditorWindow
     {
+        private struct PropertyAnimationBuffer
+        {
+            public Ease AnimationEase;
+            public float AnimationDuration;
+        }
+
         private const float DeleteButtonWidth = 24f;
         private const float ShowButtonWidth = 56f;
         private const float CaptureButtonWidth = 58f;
@@ -34,6 +41,8 @@ namespace Windsmoon.UIController.Editor
         private readonly Dictionary<string, string> _stateCommentBufferDict = new Dictionary<string, string>();
         private readonly Dictionary<string, bool> _propertyValueEditingDict = new Dictionary<string, bool>();
         private readonly Dictionary<string, object> _propertyValueBufferDict = new Dictionary<string, object>();
+        private readonly Dictionary<string, bool> _propertyAnimationEditingDict = new Dictionary<string, bool>();
+        private readonly Dictionary<string, PropertyAnimationBuffer> _propertyAnimationBufferDict = new Dictionary<string, PropertyAnimationBuffer>();
         private readonly List<string> _controllerTargetNameList = new List<string>();
         private GUIStyle _toolbarCardStyle;
         private GUIStyle _headerCardStyle;
@@ -182,6 +191,8 @@ namespace Windsmoon.UIController.Editor
             _stateCommentBufferDict.Clear();
             _propertyValueEditingDict.Clear();
             _propertyValueBufferDict.Clear();
+            _propertyAnimationEditingDict.Clear();
+            _propertyAnimationBufferDict.Clear();
         }
 
         private static UIControllerPanel GetSelectedUIControllerPanel()
@@ -541,6 +552,10 @@ namespace Windsmoon.UIController.Editor
                 if (newAnimate != property.NeedAnimate)
                 {
                     ApplyMutation("Toggle UIController Property Animation", () => property.NeedAnimate = newAnimate);
+                    if (newAnimate == false)
+                    {
+                        ClearPropertyAnimationEditState(propertyValueKey);
+                    }
                 }
             }
 
@@ -562,6 +577,7 @@ namespace Windsmoon.UIController.Editor
                     targetStateData.RebuildCache();
                 });
                 ClearPropertyValueEditState(propertyValueKey);
+                ClearPropertyAnimationEditState(propertyValueKey);
                 EditorGUILayout.EndHorizontal();
                 return true;
             }
@@ -573,7 +589,61 @@ namespace Windsmoon.UIController.Editor
                 EditorGUILayout.HelpBox($"{property.Name}: {errorMessage}", MessageType.Error);
             }
 
+            if (property.CanAnimate && property.NeedAnimate)
+            {
+                DrawPropertyAnimationOptions(property, propertyValueKey);
+            }
+
             return false;
+        }
+
+        private void DrawPropertyAnimationOptions(UIControllerProperty property, string propertyValueKey)
+        {
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Space(24f);
+
+            if (IsPropertyAnimationEditing(propertyValueKey))
+            {
+                PropertyAnimationBuffer buffer = GetPropertyAnimationBuffer(property, propertyValueKey);
+                GUILayout.Label("Animation Type", _inlineValueLabelStyle, GUILayout.Width(96f));
+                buffer.AnimationEase = (Ease)EditorGUILayout.EnumPopup(buffer.AnimationEase, GUILayout.Width(150f));
+                GUILayout.Space(8f);
+                GUILayout.Label("Duration", _inlineValueLabelStyle, GUILayout.Width(58f));
+                buffer.AnimationDuration = EditorGUILayout.FloatField(buffer.AnimationDuration, GUILayout.Width(64f));
+                GUILayout.Label("s", _inlineValueLabelStyle, GUILayout.Width(12f));
+                _propertyAnimationBufferDict[propertyValueKey] = buffer;
+
+                if (GUILayout.Button("OK", _secondaryButtonStyle, GUILayout.Width(CommentButtonWidth + 8f), GUILayout.Height(22f)))
+                {
+                    PropertyAnimationBuffer finalBuffer = buffer;
+                    ApplyMutation("Edit UIController Property Animation", () =>
+                    {
+                        property.AnimationEase = finalBuffer.AnimationEase;
+                        property.AnimationDuration = finalBuffer.AnimationDuration;
+                    });
+                    ClearPropertyAnimationEditState(propertyValueKey);
+                    GUI.FocusControl(null);
+                    Repaint();
+                }
+
+                GUILayout.FlexibleSpace();
+                EditorGUILayout.EndHorizontal();
+                return;
+            }
+
+            GUILayout.Label($"Animation  {property.AnimationEase}  {property.AnimationDuration:0.###}s", _inlineValueLabelStyle);
+            if (GUILayout.Button("Edit", _secondaryButtonStyle, GUILayout.Width(CommentButtonWidth + 8f), GUILayout.Height(22f)))
+            {
+                _propertyAnimationEditingDict[propertyValueKey] = true;
+                _propertyAnimationBufferDict[propertyValueKey] = new PropertyAnimationBuffer
+                {
+                    AnimationEase = property.AnimationEase,
+                    AnimationDuration = property.AnimationDuration
+                };
+            }
+
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
         }
 
         private void DrawPropertyValue(UIControllerProperty property, string propertyValueKey)
@@ -704,6 +774,39 @@ namespace Windsmoon.UIController.Editor
             _propertyValueBufferDict.Remove(propertyValueKey);
         }
 
+        private bool IsPropertyAnimationEditing(string propertyValueKey)
+        {
+            if (_propertyAnimationEditingDict.TryGetValue(propertyValueKey, out bool isEditing))
+            {
+                return isEditing;
+            }
+
+            _propertyAnimationEditingDict[propertyValueKey] = false;
+            return false;
+        }
+
+        private void ClearPropertyAnimationEditState(string propertyValueKey)
+        {
+            _propertyAnimationEditingDict.Remove(propertyValueKey);
+            _propertyAnimationBufferDict.Remove(propertyValueKey);
+        }
+
+        private PropertyAnimationBuffer GetPropertyAnimationBuffer(UIControllerProperty property, string propertyValueKey)
+        {
+            if (_propertyAnimationBufferDict.TryGetValue(propertyValueKey, out PropertyAnimationBuffer buffer))
+            {
+                return buffer;
+            }
+
+            buffer = new PropertyAnimationBuffer
+            {
+                AnimationEase = property.AnimationEase,
+                AnimationDuration = property.AnimationDuration
+            };
+            _propertyAnimationBufferDict[propertyValueKey] = buffer;
+            return buffer;
+        }
+
         private string GetPropertyValueKey(int stateIndex, int targetIndex, UIControllerProperty property)
         {
             return $"{_currentControllerIndex}:{stateIndex}:{targetIndex}:{property.Name}";
@@ -831,6 +934,7 @@ namespace Windsmoon.UIController.Editor
                         targetStateData.RebuildCache();
                     });
                     ClearPropertyValueEditState(propertyValueKey);
+                    ClearPropertyAnimationEditState(propertyValueKey);
                 }
             }
         }
